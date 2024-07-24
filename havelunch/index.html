@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        p {
+            padding: 0;
+            margin: 0;
+        }
+        .container {
+            width: 350px;
+            margin: 0 auto;
+        }
+        .content {
+            height: 100vh;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .column {
+            width: 40%;
+        }
+        .fee_rice {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        label {
+            width: 50%;
+        }
+        input {
+            width: 50%;
+        }
+        .btn {
+            text-align: center;
+            background: lightcoral;
+            color: aliceblue;
+            padding: 5px;
+        }
+        .truong_total,
+        .trai_total {
+            text-align: center;
+        }
+        .btn:hover {
+            cursor: pointer;
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body>
+    <div class="main">
+        <div class="container">
+            <div class="content">
+                <div class="trai_columns column">
+                    <p>trãi</p>
+                    <div class="fee_rice">
+                        <label for="trai">nhập vào: </label>
+                        <input type="text" name="trai" id="add">
+                    </div>
+                    <div class="btn_add1 btn_add btn">
+                        <p>THÊM</p>
+                    </div>
+                    <div class="trai_total">
+                        
+                    </div>
+                    <div class="btn_trai_clear btn">
+                        <p>CLEAR</p>
+                    </div>
+                </div>
+                <div class="truong_columns column">
+                    <p>truong</p>
+                    <div class="fee_rice">
+                        <label for="truong">nhập vào</label>
+                        <input type="text" name="truong" id="add">
+                    </div>
+                    <div class="btn_add2 btn_add btn">
+                        <p>THÊM</p>
+                    </div>
+                    <div class="truong_total">
+                        
+                    </div>
+                    <div class="btn_truong_clear btn">
+                        <p>CLEAR</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="./jquery.js"></script>
+    <script>
+        var datafee1 = JSON.parse(localStorage.getItem("traiFee"))
+        var datafee2 = JSON.parse(localStorage.getItem("truongFee"))
+        if(datafee1) {
+            $(".trai_total").append("<p>"+datafee1.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})+"</p>");
+        } else {
+            datafee1 = 0;
+            $(".trai_total").append("<p>0</p>");
+        }
+        if(datafee2) {
+            $(".truong_total").append("<p>"+datafee2.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})+"</p>");
+        } else {
+            datafee2 = 0;
+            $(".truong_total").append("<p>0</p>");
+        }
+        $('.btn_add1').click(function(e){
+            let mn = $(this).parent().find("#add")
+            datafee1 = parseInt(datafee1) + parseInt(mn.val());
+            localStorage.setItem('traiFee', JSON.stringify(datafee1));
+            window.location.assign("./index.html");
+        })
+        $('.btn_add2').click(function(e){
+            let mn = $(this).parent().find("#add")
+            datafee2 = parseInt(datafee2) + parseInt(mn.val());
+            localStorage.setItem('truongFee', JSON.stringify(datafee2));
+            window.location.assign("./index.html");
+        })
+        $('.btn_trai_clear').click(function(e){
+            localStorage.removeItem('traiFee');
+            window.location.assign("./index.html");
+        })
+        $('.btn_truong_clear').click(function(e){
+            localStorage.removeItem('truongFee');
+            window.location.assign("./index.html");
+        })
+    </script>
+</body>
+</html>
